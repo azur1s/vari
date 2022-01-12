@@ -11,7 +11,9 @@ pub fn format(message: &str) -> String {
 
 #[macro_export]
 macro_rules! vformat {
-    ($message:expr) => {
-        $crate::format($message)
-    };
+    ($($arg:tt)*) => {{
+        let formatted = std::fmt::format(std::format_args!($($arg)*));
+        let result = vari::format(formatted.as_str());
+        result
+    }}
 }
