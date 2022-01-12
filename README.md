@@ -22,7 +22,13 @@ fn main() {
     println!("{}", vari::format("[$bold][$italic]Bold and Italic :O[$/]"));
 }
 ```
-
+### Fun
+```rust
+fn main() {
+    // Rainbow colors!
+    println!("{}", vari::fun::rainbow("Rainbow!!!"));
+}
+```
 ## License
 This crate is under [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) license.
 

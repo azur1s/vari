@@ -38,6 +38,12 @@ mod test_one {
     }
 
     #[test]
+    fn rainbow_format() {
+        let rainbow = vari::fun::rainbow("Rainbow!!");
+        println!("{}", rainbow);
+    }
+
+    #[test]
     fn format() {
         let hello = vari::format("[$blue]Hello, [$green]World![$/]");
         assert_eq!(hello, "\x1b[34mHello, \x1b[32mWorld!\x1b[0m");

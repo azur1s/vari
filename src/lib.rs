@@ -1,4 +1,5 @@
 pub mod anchor;
+pub mod fun;
 
 /// Parse color anchor by detecting if there is a color anchor
 /// and then replace it with ANSI escape sequence.
