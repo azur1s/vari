@@ -25,6 +25,9 @@ fn main() {
 
     // Style anchor!
     vprintln!("{}Bold and Italic :O{}", "[$bold][$italic]", "[$/]");
+
+    // Background color
+    vprintln!("{}Backgroundssss{}[$/]", "[bg$magenta]", "[bg$[188, 188, 188]]World![$/]")
 }
 ```
 ### Macros

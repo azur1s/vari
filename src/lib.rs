@@ -8,7 +8,7 @@ pub mod fun;
 ///
 /// Parse color anchor by detecting if there is a color anchor
 /// and then replace it with ANSI escape sequence.
-/// If there is a invalid color anchor (eg. "[$not_a_color]"), it will panic.
+/// If there is a invalid color anchor (eg. "\[$not_a_color]"), it will panic.
 /// 
 /// # Example:
 /// ```
@@ -16,7 +16,7 @@ pub mod fun;
 /// assert_eq!(f, "\x1b[36mHi!\x1b[0m");
 /// ```
 pub fn format(message: &str) -> String {
-    anchor::compile_anchor(anchor::split_anchor(message))
+    anchor::compile_anchor(anchor::split_anchor(message.to_string()))
 }
 
 /// Like vari::format() but condensed into a macro for convenience, and can also format strings.

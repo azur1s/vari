@@ -1,7 +1,8 @@
 use regex::Regex;
 
-const ANCHOR_REGEX: &str = r"(?:\[\$(?:\w*|\S*)\])";
-const RGB_ANCHOR_REGEX: &str = r"(?:\[\$\[(?:\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?)\]\])";
+const ANCHOR_REGEX: &str = r"(?:\[(?:bg)?\$(?:\w*|\S*)\])";
+const RGB_ANCHOR_REGEX: &str = r"(?:\[(?:bg)?\$\[(?:\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?)\]\])";
+const BG_CHECK: &str = r"\[bg\$";
 
 /// Split a string at the color anchors.
 /// 
@@ -16,24 +17,34 @@ const RGB_ANCHOR_REGEX: &str = r"(?:\[\$\[(?:\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?,\s*
 /// let fs = vari::anchor::split_anchor("[$red]Vector: [1, 2, 3, 4][$/]");
 /// assert_eq!(fs, ["[$red]", "Vector: [1, 2, 3, 4]", "[$/]"]);
 /// ```
-pub fn split_anchor(message: &str) -> Vec<&str> {
+pub fn split_anchor(message: String) -> Vec<String> {
     let raw_regexs = [ANCHOR_REGEX, "|", RGB_ANCHOR_REGEX];
     let regex = Regex::new(&raw_regexs.join("")).unwrap();
 
-    let mut result = Vec::new();
+    let mut result: Vec<String> = Vec::new();
     let mut last = 0;
 
-    for cap in regex.captures_iter(message) {
+    for cap in regex.captures_iter(&message) {
         let start = cap.get(0).unwrap().start();
         let end = cap.get(0).unwrap().end();
 
         // Add the part before the anchor
         if start > last {
-            result.push(&message[last..start]);
+            result.push(message[last..start].to_string());
         }
 
-        // Add the anchor
-        result.push(&message[start..end]);
+        let anchor = &message[start..end];
+
+        let bg_regex = Regex::new(BG_CHECK).unwrap();
+        if bg_regex.is_match(&anchor) {
+            result.push("[$reverse]".to_string());
+
+            let r = format!("{}", anchor.replace("[bg$", "[$").as_str());
+
+            result.push(r);
+        } else {
+            result.push(anchor.to_string());
+        }
 
         // Update the last position
         last = end;
@@ -52,7 +63,7 @@ pub fn split_anchor(message: &str) -> Vec<&str> {
 /// let rgb = vari::anchor::compile_rgb_anchor("[$[255, 255, 255]]");
 /// assert_eq!(rgb, "\x1b[38;2;255;255;255m");
 /// ```
-pub fn compile_rgb_anchor(anchor: &str) -> String {
+pub fn compile_rgb_anchor(anchor: String) -> String {
     // Trim out "[$[" and "]]"
     let trimmed = anchor.trim_start_matches("[$[").trim_end_matches("]]");
 
@@ -94,7 +105,7 @@ pub fn compile_rgb_anchor(anchor: &str) -> String {
 /// let f7bae0 = vari::anchor::compile_anchor(["[$[247, 186, 224]]", "[$reverse]", "This is f7bae0!", "[$/]"].to_vec());
 /// assert_eq!(f7bae0, "\u{1b}[38;2;247;186;224m\u{1b}[7mThis is f7bae0!\u{1b}[0m");
 /// ```
-pub fn compile_anchor(messages: Vec<&str>) -> String {
+pub fn compile_anchor(messages: Vec<String>) -> String {
     let mut result = String::new();
 
     for message in messages {
@@ -127,21 +138,22 @@ pub fn compile_anchor(messages: Vec<&str>) -> String {
             "[$italic]" => result.push_str("\x1b[3m"),
             "[$underline]" => result.push_str("\x1b[4m"),
             "[$blink]" | "[$blinking]" => result.push_str("\x1b[5m"),
-            "[$reverse]" => result.push_str("\x1b[7m"),
+            "[$reverse]" | "[$reversed]" => result.push_str("\x1b[7m"),
             "[$invisible]" => result.push_str("\x1b[8m"),
+            "[$strikethrough]" | "[$strike_through]" => result.push_str("\x1b[9m"),
 
             _ => {
                 if message.starts_with("[$") && message.ends_with("]") {
                     let rgb_anchor_regex = Regex::new(RGB_ANCHOR_REGEX).unwrap();
 
-                    if rgb_anchor_regex.is_match(message) {
-                        let compiled = compile_rgb_anchor(message);
+                    if rgb_anchor_regex.is_match(&message) {
+                        let compiled = compile_rgb_anchor(message.to_string());
                         result.push_str(&compiled);
                     } else {
                         panic!("Unknown color anchor: {}", message);
                     }
                 } else {
-                    result.push_str(message);
+                    result.push_str(&message);
                 }
             }
         }

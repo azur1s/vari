@@ -1,8 +1,8 @@
 mod compile {
     #[test]
     fn split_anchor() {
-        let message = vari::anchor::split_anchor("Cool array [$cyan][1, 2, 3][$/]");
-        let custom_rgb = vari::anchor::split_anchor("[$[114, 119, 39]]#727727![$[66, 4, 32]]Do you see it?[$/]");
+        let message = vari::anchor::split_anchor("Cool array [$cyan][1, 2, 3][$/]".to_string());
+        let custom_rgb = vari::anchor::split_anchor("[$[114, 119, 39]]#727727![$[66, 4, 32]]Do you see it?[$/]".to_string());
         assert_eq!(message, vec!["Cool array ", "[$cyan]", "[1, 2, 3]", "[$/]"]);
         assert_eq!(custom_rgb, vec!["[$[114, 119, 39]]", "#727727!", "[$[66, 4, 32]]", "Do you see it?", "[$/]"]);
     }
@@ -10,7 +10,7 @@ mod compile {
     #[test]
     fn compile_anchor() {
         let message = "[$cyan]This message is cyan[$/]";
-        let compiled = vari::anchor::compile_anchor(vari::anchor::split_anchor(message));
+        let compiled = vari::anchor::compile_anchor(vari::anchor::split_anchor(message.to_string()));
         assert_eq!(compiled, "\x1b[36mThis message is cyan\x1b[0m");
     }
 

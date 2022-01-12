@@ -6,6 +6,12 @@ mod format {
     }
 
     #[test]
+    fn test_bg() {
+        let bg = vari::anchor::split_anchor("[bg$red]Test[$/]".to_string());
+        println!("{:?}", bg);
+    }
+
+    #[test]
     fn format() {
         let hello = vari::format("[$blue]Hello, [$green]World![$/]");
         assert_eq!(hello, "\x1b[34mHello, \x1b[32mWorld!\x1b[0m");
@@ -23,8 +29,12 @@ mod format {
         assert_eq!(reversed, "\x1b[7m\x1b[91mReverseee!!!\x1b[0m");
         println!("{}", reversed);
 
-        let chained = vari::format("[$reverse][$bold][$italic][$bright_green][$underline]😎 Big chains 😎[$/]");
-        assert_eq!(chained, "\x1b[7m\x1b[1m\x1b[3m\x1b[92m\x1b[4m😎 Big chains 😎\x1b[0m");
+        let chained = vari::format("[$strikethrough][$reverse][$bold][$italic][$bright_green][$underline]😎 Big chains 😎[$/]");
+        assert_eq!(chained, "\x1b[9m\x1b[7m\x1b[1m\x1b[3m\x1b[92m\x1b[4m😎 Big chains 😎\x1b[0m");
         println!("{}", chained);
+
+        let background = vari::format("[bg$red]Hello,[bg$white] [bg$[188, 188, 188]]World![$/]");
+        assert_eq!(background, "\u{1b}[7m\u{1b}[31mHello,\u{1b}[7m\u{1b}[37m \u{1b}[7m\u{1b}[38;2;188;188;188mWorld!\u{1b}[0m");
+        println!("{}", background);
     }
 }
