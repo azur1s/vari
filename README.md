@@ -4,7 +4,7 @@ Vari (Väri) is a Rust library for formatting strings with colors and cosmetic s
 ## Installing
 ```rust
 [dependencies]
-vari = 0.1.0
+vari = 0.1.1
 ```
 
 ## Features
