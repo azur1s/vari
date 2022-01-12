@@ -1,4 +1,4 @@
-![Logo](assets/vari_logo.png)
+![Logo](https://raw.githubusercontent.com/azur1s/vari/master/assets/vari_logo.png)
 # Vari
 [![crates.io](https://img.shields.io/crates/v/vari.svg)](https://crates.io/crates/vari)
 [![crates.io](https://docs.rs/chumsky/badge.svg)](https://docs.rs/vari/)
