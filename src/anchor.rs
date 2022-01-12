@@ -68,14 +68,36 @@ pub fn compile_anchor(messages: Vec<&str>) -> String {
 
     for message in messages {
         match message.to_lowercase().as_str() {
-            "[$red]" => result.push_str("\x1b[31m"),
-            "[$green]" => result.push_str("\x1b[32m"),
-            "[$yellow]" => result.push_str("\x1b[33m"),
-            "[$blue]" => result.push_str("\x1b[34m"),
+            // Normal color variants
+            "[$black]"   => result.push_str("\x1b[30m"),
+            "[$red]"     => result.push_str("\x1b[31m"),
+            "[$green]"   => result.push_str("\x1b[32m"),
+            "[$yellow]"  => result.push_str("\x1b[33m"),
+            "[$blue]"    => result.push_str("\x1b[34m"),
             "[$magenta]" => result.push_str("\x1b[35m"),
-            "[$cyan]" => result.push_str("\x1b[36m"),
-            "[$white]" => result.push_str("\x1b[37m"),
+            "[$cyan]"    => result.push_str("\x1b[36m"),
+            "[$white]"   => result.push_str("\x1b[37m"),
             "[$reset]" | "[$/]" => result.push_str("\x1b[0m"),
+
+            // Bright color variants
+            "[$bright_black]"   | "[$brightblack]"   => result.push_str("\x1b[90m"),
+            "[$bright_red]"     | "[$brightred]"     => result.push_str("\x1b[91m"),
+            "[$bright_green]"   | "[$brightgreen]"   => result.push_str("\x1b[92m"),
+            "[$bright_yellow]"  | "[$brightyellow]"  => result.push_str("\x1b[93m"),
+            "[$bright_blue]"    | "[$brightblue]"    => result.push_str("\x1b[94m"),
+            "[$bright_magenta]" | "[$brightmagenta]" => result.push_str("\x1b[95m"),
+            "[$bright_cyan]"    | "[$brightcyan]"    => result.push_str("\x1b[96m"),
+            "[$bright_white]"   | "[$brightwhite]"   => result.push_str("\x1b[97m"),
+
+            // Style variants
+            "[$regular]" => result.push_str("\x1b[0m"),
+            "[$bold]" => result.push_str("\x1b[1m"),
+            "[$low]" | "[$low_intensity]" | "[$lowintensity]" => result.push_str("\x1b[2m"),
+            "[$italic]" => result.push_str("\x1b[3m"),
+            "[$underline]" => result.push_str("\x1b[4m"),
+            "[$blink]" | "[$blinking]" => result.push_str("\x1b[5m"),
+            "[$reverse]" => result.push_str("\x1b[7m"),
+            "[$invisible]" => result.push_str("\x1b[8m"),
 
             _ => {
                 if message.starts_with("[$") && message.ends_with("]") {
