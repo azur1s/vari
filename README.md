@@ -2,14 +2,14 @@
 Vari (Väri) is a Rust library for formatting strings with colors and cosmetic stuff to the terminal. Like [Rich](https://github.com/Textualize/rich) library for Python.
 
 ## Installing
-```rs
+```rust
 [dependencies]
-vari = 0.1
+vari = 0.1.0
 ```
 
 ## Features
 ### Color Anchor
-```rs
+```rust
 use vari::format;
 
 fn main() {
