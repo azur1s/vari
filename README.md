@@ -10,12 +10,13 @@ vari = 0.1.0
 ## Features
 ### Color Anchor
 ```rust
-use vari::format;
-
 fn main() {
     // [$/] is shorthand for [$reset]
     let message = vari::format("[$blue]Hello, [$green]World![$/]");
     println!("{}", message);
+
+    // Custom RGB!
+    println!("{}", vari::format("[$[114, 119, 39]]#727727![$[66, 4, 32]] Do you see it?[$/]"));
 }
 ```
 
