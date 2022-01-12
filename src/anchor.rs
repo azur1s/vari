@@ -3,10 +3,19 @@ use regex::Regex;
 const ANCHOR_REGEX: &str = r"(?:\[\$(?:\w*|\S*)\])";
 const RGB_ANCHOR_REGEX: &str = r"(?:\[\$\[(?:\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?)\]\])";
 
+/// Split a string at the color anchors.
+/// 
 /// Parse color anchor by detecting if there is
-/// a "\[" and a color name and a "]" at the end.
-/// For example: "\[$red]Hello\[/]"       will be \[ "\[$red]", "Hello", "\[$/]" ].
-///              "\[$cyan]\[1, 2, 3]\[$/]" will be \[ "\[$cyan]", "\[1, 2, 3]", "\[$/]" ].
+/// a "\[$" and any characters and a "]" at the end.
+/// 
+/// # Example:
+/// ```
+/// let f = vari::anchor::split_anchor("[$cyan]Hi![$/]");
+/// assert_eq!(f, ["[$cyan]", "Hi!", "[$/]"]);
+/// 
+/// let fs = vari::anchor::split_anchor("[$red]Vector: [1, 2, 3, 4][$/]");
+/// assert_eq!(fs, ["[$red]", "Vector: [1, 2, 3, 4]", "[$/]"]);
+/// ```
 pub fn split_anchor(message: &str) -> Vec<&str> {
     let raw_regexs = [ANCHOR_REGEX, "|", RGB_ANCHOR_REGEX];
     let regex = Regex::new(&raw_regexs.join("")).unwrap();
@@ -33,9 +42,16 @@ pub fn split_anchor(message: &str) -> Vec<&str> {
     result
 }
 
+/// Compile (or replace) the color anchors with ANSI escape sequences.
+/// 
 /// Compile RGB anchor to ANSI escape sequence.
 /// Will panic if the values can't be parsed to integer.
-/// For example: "\[$\[114, 119, 39]]Custom color!" will be "\x1b[38;2;114;119;39mCustom color!".
+/// 
+/// # Example:
+/// ```
+/// let rgb = vari::anchor::compile_rgb_anchor("[$[255, 255, 255]]");
+/// assert_eq!(rgb, "\x1b[38;2;255;255;255m");
+/// ```
 pub fn compile_rgb_anchor(anchor: &str) -> String {
     // Trim out "[$[" and "]]"
     let trimmed = anchor.trim_start_matches("[$[").trim_end_matches("]]");
@@ -61,8 +77,23 @@ pub fn compile_rgb_anchor(anchor: &str) -> String {
     }
 }
 
-/// Compile a color anchor to a ANSI escape sequence.
-/// For example: "\[$red]Hello\[/]" will be "\x1b[31mHello\x1b[0m".
+/// Compile (or replace) the color and style anchors with ANSI escape sequences.
+/// 
+/// Compile a color and style anchor to their respective ANSI escape sequence.
+/// If the color is not recognized, it will try to parse it as RGB anchor,
+/// and if that fails, it will panic.
+/// 
+/// # Example:
+/// ```
+/// let bold = vari::anchor::compile_anchor(["[$bold]", "This is bold!", "[$/]"].to_vec());
+/// assert_eq!(bold, "\x1b[1mThis is bold!\x1b[0m");
+/// 
+/// let chain = vari::anchor::compile_anchor(["[$bold]", "[$red]", "This is bold red!", "[$/]"].to_vec());
+/// assert_eq!(chain, "\u{1b}[1m\u{1b}[31mThis is bold red!\u{1b}[0m");
+/// 
+/// let f7bae0 = vari::anchor::compile_anchor(["[$[247, 186, 224]]", "[$reverse]", "This is f7bae0!", "[$/]"].to_vec());
+/// assert_eq!(f7bae0, "\u{1b}[38;2;247;186;224m\u{1b}[7mThis is f7bae0!\u{1b}[0m");
+/// ```
 pub fn compile_anchor(messages: Vec<&str>) -> String {
     let mut result = String::new();
 
