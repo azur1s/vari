@@ -8,3 +8,10 @@ pub mod fun;
 pub fn format(message: &str) -> String {
     anchor::compile_anchor(anchor::split_anchor(message))
 }
+
+#[macro_export]
+macro_rules! vformat {
+    ($message:expr) => {
+        $crate::format($message)
+    };
+}
