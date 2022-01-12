@@ -1,4 +1,5 @@
 #![doc = include_str!("../README.md")]
+#![doc(html_logo_url = "https://raw.githubusercontent.com/azur1s/vari/master/assets/vari_logo.png")]
 
 pub mod anchor;
 pub mod fun;
