@@ -4,7 +4,7 @@ Vari (Väri) is a Rust library for formatting strings with colors and cosmetic s
 ## Installing
 ```rust
 [dependencies]
-vari = 0.1.2
+vari = 0.1.3
 ```
 
 ## Features
@@ -19,7 +19,18 @@ fn main() {
     println!("{}", vari::format("[$[114, 119, 39]]#727727![$[66, 4, 32]] Do you see it?[$/]"));
 
     // Style anchor!
-    println!("{}", vari::format("[$bold][$italic]Bold and Italic :O[$/]"));
+    vprintln!("{}Bold and Italic :O{}", "[$bold][$italic]", "[$/]");
+}
+```
+### Macros
+```rust
+fn main() {
+    // We are using `vformat!()` because `format!()` is from Rust and we can't replace it
+    let f = vformat!("{}Hello!{}", "[$bright_magenta]", "[$/]");
+    println!("{}", f);
+
+    // Feeling lazy? there is vprint! and vprintln! macros!
+    vprintln!("{}I'm feeling {}{}", "[$italic][$yellow]", "lazy" "$[/]");
 }
 ```
 ### Fun
