@@ -1,15 +1,12 @@
-<div align="center">
-    <img src="https://raw.githubusercontent.com/azur1s/vari/master/assets/vari_logo.png">
-    <h1>Vari</h1>
-    <a href="https://crates.io/crates/vari"><img src="https://img.shields.io/crates/v/vari.svg"></a>
-    <a href="https://docs.rs/vari/"><img src="https://docs.rs/chumsky/badge.svg"></a>
-    <a href="https://github.com/azur1s/vari#license"><img src="https://img.shields.io/crates/l/vari.svg"></a>
-</div>
+# Vari
+[![crates.io](https://img.shields.io/crates/v/vari.svg)](https://crates.io/crates/vari)
+[![crates.io](https://docs.rs/chumsky/badge.svg)](https://docs.rs/vari/)
+[![License](https://img.shields.io/crates/l/vari.svg)](https://github.com/azur1s/vari#license)
 
 Vari (Väri) is a Rust library for formatting strings with colors and cosmetic stuff to the terminal. Like [Rich](https://github.com/Textualize/rich) library for Python.
 
 ## Installing
-```rust
+```toml
 [dependencies]
 vari = 0.1.3
 ```
@@ -49,4 +46,3 @@ fn main() {
 ```
 ## License
 This crate is under [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) license.
-
