@@ -17,7 +17,46 @@ vari = "0.1.5"
 
 ### Color Anchor
 
-Color anchor are a token that is inside a string with "[\$...]" format (eg. "[\$red]", "[bg\$yellow]", "[\$bold]")
+Color anchor are a bbcode-like markup for colors and styles (eg. "[\$red]", "[bg\$yellow]", "[\$bold]")
+
+<details>
+<summary>Anchors</summary>
+<p>Colors:</p>
+<ul>
+    <li>[$black]</li>
+    <li>[$red]</li>
+    <li>[$green]</li>
+    <li>[$yellow]</li>
+    <li>[$blue]</li>
+    <li>[$magenta]</li>
+    <li>[$cyan]</li>
+    <li>[$white]</li>
+    <li>[$reset] or [$r] or [$/]</li>
+</ul>
+<p>Bright colors:</p>
+<ul>
+    <li>[$bright_black] or [$brightblack]</li>
+    <li>[$bright_red] or [$brightred]</li>
+    <li>[$bright_green] or [$brightgreen]</li>
+    <li>[$bright_yellow] or [$brightyellow]</li>
+    <li>[$bright_blue] or [$brightblue]</li>
+    <li>[$bright_magenta] or [$brightmagenta]</li>
+    <li>[$bright_cyan] or [$brightcyan]</li>
+    <li>[$bright_white] or [$brightwhite]</li>
+</ul>
+<p>Styles</p>
+<ul>
+    <li>[$regular]</li>
+    <li>[$bold]</li>
+    <li>[$dim] or [$low] or [$low_intensity] or [$lowintensity]</li>
+    <li>[$italic]</li>
+    <li>[$underline]</li>
+    <li>[$blink] or [$blinking]</li>
+    <li>[$reverse] or [$reversed]</li>
+    <li>[$invisible]</li>
+    <li>[$strikethrough] or [$strike_through]</li>
+</ul>
+</details>
 
 ```rust
 // [$/] is shorthand for [$reset]
