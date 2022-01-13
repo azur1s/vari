@@ -119,7 +119,7 @@ pub fn compile_anchor(messages: Vec<String>) -> String {
             "[$magenta]" => result.push_str("\x1b[35m"),
             "[$cyan]"    => result.push_str("\x1b[36m"),
             "[$white]"   => result.push_str("\x1b[37m"),
-            "[$reset]" | "[$/]" => result.push_str("\x1b[0m"),
+            "[$r]" | "[$reset]" | "[$/]" => result.push_str("\x1b[0m"),
 
             // Bright color variants
             "[$bright_black]"   | "[$brightblack]"   => result.push_str("\x1b[90m"),
