@@ -53,7 +53,7 @@ Color anchor are a bbcode-like markup for colors and styles (eg. "[\$red]", "[bg
     <li>[$underline]</li>
     <li>[$blink] or [$blinking]</li>
     <li>[$reverse] or [$reversed]</li>
-    <li>[$invisible]</li>
+    <li>[$invisible] or [$hidden]</li>
     <li>[$strikethrough] or [$strike_through]</li>
 </ul>
 <p>Note: [bg$colors] is a valid anchors, it will be translated to [$reversed][$color]</p>
@@ -72,6 +72,23 @@ vprintln!("{}Bold and Italic :O{}", "[$bold][$italic]", "[$/]");
 
 // Background color
 vprintln!("{}Backgroundssss{}[$/]", "[bg$magenta]", "[bg$[188, 188, 188]]World![$/]")
+```
+### Colorize
+Colorize string directly by calling colorize() method, like [colored](https://github.com/mackwic/colored) crate.
+
+For example: "red".colorize("red") is the same as "[\$red]red[$/]"
+
+Note: Chaining is not yet implemented, because .colorize() adds [$/] so you can't chain styles
+
+The argument should be the color's name (the same name as the anchor colors).
+```rust
+use vari::colorize::Colorize;
+
+fn main() {
+    println!("{}", "Hello, World".colorize("cyan"));
+    println!("{}", "This is red".colorize("brightred"));
+    println!("{}", "Bold.".colorize("bold"));
+}
 ```
 ### Fun
 ```rust

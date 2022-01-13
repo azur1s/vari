@@ -3,6 +3,7 @@
 
 pub mod anchor;
 pub mod fun;
+pub mod colorize;
 
 /// Format a string with ANSI escape sequences.
 ///

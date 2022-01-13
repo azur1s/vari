@@ -139,7 +139,7 @@ pub fn compile_anchor(messages: Vec<String>) -> String {
             "[$underline]" => result.push_str("\x1b[4m"),
             "[$blink]" | "[$blinking]" => result.push_str("\x1b[5m"),
             "[$reverse]" | "[$reversed]" => result.push_str("\x1b[7m"),
-            "[$invisible]" => result.push_str("\x1b[8m"),
+            "[$invisible]" | "[$hidden]" => result.push_str("\x1b[8m"),
             "[$strikethrough]" | "[$strike_through]" => result.push_str("\x1b[9m"),
 
             _ => {
