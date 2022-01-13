@@ -56,6 +56,7 @@ Color anchor are a bbcode-like markup for colors and styles (eg. "[\$red]", "[bg
     <li>[$invisible]</li>
     <li>[$strikethrough] or [$strike_through]</li>
 </ul>
+<p>Note: [bg$colors] is a valid anchors, it will be translated to [$reversed][$color]</p>
 </details>
 
 ```rust
