@@ -1,7 +1,10 @@
 use regex::Regex;
 
-const ANCHOR_REGEX: &str = r"(?:\[(?:bg)?\$(?:\w*|\S*)\])";
+use crate::util::hex_to_rgb;
+
+const ANCHOR_REGEX: &str = r"(?:\[(?:bg)?\$(?:#)?(?:\w*|\S*)\])";
 const RGB_ANCHOR_REGEX: &str = r"(?:\[(?:bg)?\$\[(?:\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?,\s*?\d{1,3}\s*?)\]\])";
+const HEX_ANCHOR_REGEX: &str = r"(?:\[\$#[[:xdigit:]]{6}\])";
 const BG_CHECK: &str = r"\[bg\$";
 
 /// Split a string at the color anchors.
@@ -18,7 +21,7 @@ const BG_CHECK: &str = r"\[bg\$";
 /// assert_eq!(fs, ["[$red]", "Vector: [1, 2, 3, 4]", "[$/]"]);
 /// ```
 pub fn split_anchor(message: String) -> Vec<String> {
-    let raw_regexs = [ANCHOR_REGEX, "|", RGB_ANCHOR_REGEX];
+    let raw_regexs = [ANCHOR_REGEX, "|", RGB_ANCHOR_REGEX, "|", HEX_ANCHOR_REGEX];
     let regex = Regex::new(&raw_regexs.join("")).unwrap();
 
     let mut result: Vec<String> = Vec::new();
@@ -143,12 +146,17 @@ pub fn compile_anchor(messages: Vec<String>) -> String {
             "[$strikethrough]" | "[$strike_through]" => result.push_str("\x1b[9m"),
 
             _ => {
+                // Check if it's an anchor
                 if message.starts_with("[$") && message.ends_with("]") {
                     let rgb_anchor_regex = Regex::new(RGB_ANCHOR_REGEX).unwrap();
+                    let hex_anchor_regex = Regex::new(HEX_ANCHOR_REGEX).unwrap();
 
                     if rgb_anchor_regex.is_match(&message) {
                         let compiled = compile_rgb_anchor(message.to_string());
                         result.push_str(&compiled);
+                    } else if hex_anchor_regex.is_match(&message) {
+                        let (r, g, b) = hex_to_rgb(&message);
+                        result.push_str(&format!("\x1b[38;2;{};{};{}m", r, g, b));
                     } else {
                         panic!("Unknown color anchor: {}", message);
                     }

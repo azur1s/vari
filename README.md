@@ -72,6 +72,9 @@ vprintln!("{}Bold and Italic :O{}", "[$bold][$italic]", "[$/]");
 
 // Background color
 vprintln!("{}Backgroundssss{}[$/]", "[bg$magenta]", "[bg$[188, 188, 188]]World![$/]")
+
+// Hexadecimal
+vprintln!("[$#ffffff]Hello, [$#000000]World![$/]");
 ```
 ### Colorize
 Colorize string directly by calling colorize() method, like [colored](https://github.com/mackwic/colored) crate.

@@ -4,6 +4,7 @@
 pub mod anchor;
 pub mod fun;
 pub mod colorize;
+pub mod util;
 
 /// Format a string with ANSI escape sequences.
 ///
