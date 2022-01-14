@@ -99,14 +99,14 @@ pub fn compile_rgb_anchor(anchor: String) -> String {
 /// 
 /// # Example:
 /// ```
-/// let bold = vari::anchor::compile_anchor(["[$bold]", "This is bold!", "[$/]"].to_vec());
+/// let bold = vari::vformat!("[$bold]This is bold![$/]");
 /// assert_eq!(bold, "\x1b[1mThis is bold!\x1b[0m");
 /// 
-/// let chain = vari::anchor::compile_anchor(["[$bold]", "[$red]", "This is bold red!", "[$/]"].to_vec());
-/// assert_eq!(chain, "\u{1b}[1m\u{1b}[31mThis is bold red!\u{1b}[0m");
+/// let chain = vari::vformat!("[$bold][$red]This is bold and red![$/]");
+/// assert_eq!(chain, "\x1b[1m\x1b[31mThis is bold and red!\x1b[0m");
 /// 
-/// let f7bae0 = vari::anchor::compile_anchor(["[$[247, 186, 224]]", "[$reverse]", "This is f7bae0!", "[$/]"].to_vec());
-/// assert_eq!(f7bae0, "\u{1b}[38;2;247;186;224m\u{1b}[7mThis is f7bae0!\u{1b}[0m");
+/// let f7bae0 = vari::vformat!("[$#f7bae0]This is f7bae0![$/]");
+/// assert_eq!(f7bae0, "\x1b[38;2;247;186;224mThis is f7bae0!\x1b[0m");
 /// ```
 pub fn compile_anchor(messages: Vec<String>) -> String {
     let mut result = String::new();
