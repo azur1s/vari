@@ -18,11 +18,6 @@ mod format {
     }
 
     #[test]
-    fn vprintln_no_args() {
-        vari::vprintln!("[$cyan]Hi![$/]");
-    }
-
-    #[test]
     fn format() {
         let hello = vari::format("[$blue]Hello, [$green]World![$/]");
         assert_eq!(hello, "\x1b[34mHello, \x1b[32mWorld!\x1b[0m");
@@ -47,6 +42,10 @@ mod format {
         let background = vari::format("[bg$red]Hello,[bg$white] [bg$[188, 188, 188]]World![$/]");
         assert_eq!(background, "\u{1b}[7m\u{1b}[31mHello,\u{1b}[7m\u{1b}[37m \u{1b}[7m\u{1b}[38;2;188;188;188mWorld!\u{1b}[0m");
         println!("{}", background);
+
+        let no_end = vari::format("[$blue]Hello, [$green]World!");
+        assert_eq!(no_end, "\x1b[34mHello, \x1b[32mWorld!");
+        println!("{}", no_end);
 
         let hex = vari::format("[$#ffffff]Hello,[$#000000] World![$/]");
         assert_eq!(hex, "\x1b[38;2;255;255;255mHello,\x1b[38;2;0;0;0m World!\x1b[0m");

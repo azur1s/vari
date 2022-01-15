@@ -37,7 +37,7 @@ impl NoAnsi for str {
     /// Remove ANSI escape sequence from a string.
     /// 
     /// Remove ANSI escape sequence from a string by doing a regex match and then
-    /// push the string without the ANSI escape sequence. This could be use in
+    /// replace it with empty string. This could be use in
     /// padding calculation because `.len()` only ignores `\x1b` and not `[..m`.
     /// 
     /// # Example:
@@ -47,24 +47,27 @@ impl NoAnsi for str {
     /// assert_eq!(result, "Test");
     /// ```
     fn no_ansi(&self) -> String {
+        let re = Regex::new(r"(?:\x1b\[[;\d]*m)").unwrap();
+
+        re.replace_all(&self, "").to_string()
+    }
+}
+
+pub fn log_from(string: &str, from: &str) -> String {
+    if let Some((w, _)) = term_size::dimensions() {
+
+        let padding_amount = w - from.no_ansi().len() - string.no_ansi().len();
+        let padding = " ".repeat(padding_amount);
+        
         let mut result = String::new();
 
-        let re = Regex::new(r"(?:\x1b\[[;\d]*m)").unwrap();
-        let mut last = 0;
-
-        if re.is_match(self) {
-            for cap in re.captures_iter(self) {
-                let start = cap.get(0).unwrap().start();
-                let end = cap.get(0).unwrap().end();
-
-                result.push_str(&self[last..start]);
-
-                last = end;
-            }
-        } else {
-            result.push_str(self);
-        }
+        result.push_str(string);
+        result.push_str(&padding);
+        result.push_str(from);
 
         result
+
+    } else {
+        panic!("Failed to get terminal size");
     }
 }

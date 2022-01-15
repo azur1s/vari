@@ -52,6 +52,9 @@ pub fn split_anchor(message: String) -> Vec<String> {
         // Update the last position
         last = end;
     }
+    if last < message.len() {
+        result.push(message[last..].to_string());
+    }
 
     result
 }
@@ -137,7 +140,7 @@ pub fn compile_anchor(messages: Vec<String>) -> String {
             // Style variants
             "[$regular]" => result.push_str("\x1b[0m"),
             "[$bold]" => result.push_str("\x1b[1m"),
-            "[$low]" | "[$low_intensity]" | "[$lowintensity]" | "$[dim]" => result.push_str("\x1b[2m"),
+            "[$low]" | "[$low_intensity]" | "[$lowintensity]" | "[$dim]" => result.push_str("\x1b[2m"),
             "[$italic]" => result.push_str("\x1b[3m"),
             "[$underline]" => result.push_str("\x1b[4m"),
             "[$blink]" | "[$blinking]" => result.push_str("\x1b[5m"),
