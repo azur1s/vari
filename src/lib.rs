@@ -2,9 +2,13 @@
 #![doc(html_logo_url = "https://raw.githubusercontent.com/azur1s/vari/master/assets/vari_logo.png")]
 
 pub mod anchor;
-pub mod fun;
-pub mod colorize;
 pub mod util;
+
+#[cfg(feature = "fun")]
+pub mod fun;
+
+#[cfg(feature = "colorize")]
+pub mod colorize;
 
 #[cfg(feature = "log")]
 pub mod log;

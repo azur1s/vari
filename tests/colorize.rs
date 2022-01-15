@@ -1,15 +1,17 @@
 mod colorize {
-    use vari::colorize::Colorize;
-
     #[test]
     #[should_panic]
+    #[cfg(feature = "colorize")]
     fn invalid_colorize() {
+        use vari::colorize::Colorize;
         let unknown = "unknown".colorize("???");
         println!("{}", unknown);
     }
 
     #[test]
+    #[cfg(feature = "colorize")]
     fn colorize() {
+        use vari::colorize::Colorize;
         let red = "red".colorize("red");
         assert_eq!(red, "\x1b[31mred\x1b[0m");
         println!("{}", red);

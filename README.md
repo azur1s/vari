@@ -6,8 +6,11 @@
 [![License](https://img.shields.io/crates/l/vari.svg)](https://github.com/azur1s/vari#license)
 
 Vari (Väri) is a Rust library for formatting strings with colors and cosmetic stuff to the terminal. Like [Rich](https://github.com/Textualize/rich) library for Python.
+> Väri means "color" in Finnish.
 
 ## Installing
+Vari come with color anchors as default feature,
+The other opt-in features are: "log", "fun",
 ```toml
 [dependencies]
 vari = "0.1.8"
@@ -78,6 +81,10 @@ vprintln!("[$#ffffff]Hello, [$#000000]World![$/]");
 ```
 
 ### Colorize
+```toml
+[dependencies]
+vari = { version = "0.1.8", features = ["colorize"] }
+```
 
 Colorize string directly by calling colorize() method, like [colored](https://github.com/mackwic/colored) crate.
 
@@ -97,6 +104,10 @@ fn main() {
 ```
 
 ### Log
+```toml
+[dependencies]
+vari = { version = "0.1.8", features = ["log"] }
+```
 
 Some println-ish function for logging
 
@@ -108,6 +119,7 @@ vari::util::log(&log_message, &log_file);
 ![logs](https://raw.githubusercontent.com/azur1s/vari/master/assets/log.png)
 
 ### No ANSI for .len()
+> This is in default features.
 
 This might be used in padding calculation, because in colored string (eg. "\x1b[31mTest\x1b[0m"),
 the length calculated also contains the "[31m" and the "[0m" in it, making the padding incorrect.
@@ -132,6 +144,10 @@ return result
 ![no_ansi()](https://raw.githubusercontent.com/azur1s/vari/master/assets/no_ansi.png)
 
 ### Fun
+```toml
+[dependencies]
+vari = { version = "0.1.8", features = ["fun"] }
+```
 
 ```rust
 fn main() {

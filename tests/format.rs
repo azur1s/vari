@@ -1,5 +1,7 @@
 mod format {
+    
     #[test]
+    #[cfg(feature = "fun")]
     fn rainbow_format() {
         let rainbow = vari::fun::rainbow("Rainbow!!");
         println!("{}", rainbow);
