@@ -1,3 +1,5 @@
+use regex::Regex;
+
 /// Converts a hex string to a RGB color.
 /// 
 /// Takes a hex string and returns a RGB color. Will panic if the string is not
@@ -23,4 +25,44 @@ pub fn hex_to_rgb(hex: &str) -> (u8, u8, u8) {
     }
 
     (r.unwrap(), g.unwrap(), b.unwrap())
+}
+
+/// A trait for removing ANSI escape sequence.
+pub trait NoAnsi {
+    fn no_ansi(&self) -> String;
+}
+
+/// Remove ANSI escape sequence from a string.
+impl NoAnsi for str {
+    /// Remove ANSI escape sequence from a string.
+    /// 
+    /// Remove ANSI escape sequence from a string by doing a regex match and then
+    /// push the string without the ANSI escape sequence. This could be use in
+    /// padding calculation because `.len()` only ignores `\x1b` and not `[..m`.
+    /// 
+    /// # Example:
+    /// ```
+    /// let original = "\x1b[1mTest\x1b[0m";
+    /// let result = original.no_ansi();
+    /// assert_eq!(result, "Test");
+    /// ```
+    fn no_ansi(&self) -> String {
+        let mut result = String::new();
+
+        let re = Regex::new(r"(?:\x1b\[[;\d]*m)").unwrap();
+        let mut last = 0;
+
+        for cap in re.captures_iter(&self) {
+            let start = cap.get(0).unwrap().start();
+            let end = cap.get(0).unwrap().end();
+
+            if start > last {
+                result.push_str(&self[last..start].to_string());
+            }
+
+            last = end;
+        }
+
+        result
+    }
 }
