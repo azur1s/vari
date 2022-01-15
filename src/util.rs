@@ -53,7 +53,7 @@ impl NoAnsi for str {
     }
 }
 
-pub fn log_from(string: &str, from: &str) -> String {
+pub fn log(string: &str, from: &str) -> String {
     if let Some((w, _)) = term_size::dimensions() {
 
         let padding_amount = w - from.no_ansi().len() - string.no_ansi().len();

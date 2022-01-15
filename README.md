@@ -93,6 +93,28 @@ fn main() {
     println!("{}", "Bold.".colorize("bold"));
 }
 ```
+### No ANSI for .len()
+This might be used in padding calculation, because in colored string (eg. "\x1b[31mTest\x1b[0m"),
+the length calculated also contains the "[31m" and the "[0m" in it, making the padding incorrect.
+So this trait implements a ".no_ansi()" which remove all the ANSI escape sequence and then you could do
+".len()" after it.
+```rust
+// vari::util::log()
+
+// Calculate padding amount between the message.
+// eg. left________right
+let padding_amount = w - right.no_ansi().len() - left.no_ansi().len();
+let padding = " ".repeat(padding_amount);
+        
+let mut result = String::new();
+
+result.push_str(left);
+result.push_str(&padding);
+result.push_str(right);
+
+return result      
+```
+![no_ansi()](https://raw.githubusercontent.com/azur1s/vari/master/assets/no_ansi.png)
 ### Fun
 ```rust
 fn main() {
