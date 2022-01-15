@@ -13,7 +13,7 @@ Vari come with color anchors as default feature,
 The other opt-in features are: "log", "fun",
 ```toml
 [dependencies]
-vari = "0.1.8"
+vari = "0.2.0"
 ```
 
 ## Features
@@ -107,7 +107,7 @@ fn main() {
 ### Log
 ```toml
 [dependencies]
-vari = { version = "0.1.8", features = ["log"] }
+vari = { version = "0.2.0", features = ["log"] }
 ```
 
 Some println-ish function for logging
@@ -147,7 +147,7 @@ return result
 ### Fun
 ```toml
 [dependencies]
-vari = { version = "0.1.8", features = ["fun"] }
+vari = { version = "0.2.0", features = ["fun"] }
 ```
 
 ```rust
