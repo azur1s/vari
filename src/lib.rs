@@ -81,6 +81,7 @@ macro_rules! vprint {
 /// fn main() {
 ///   vprintln!("[$cyan]Hi![$/]");
 /// }
+/// ```
 #[macro_export]
 macro_rules! vprintln {
     () => {{
@@ -90,5 +91,22 @@ macro_rules! vprintln {
         let formatted = std::fmt::format(std::format_args!($($arg)*));
         let result = vari::format(formatted.as_str());
         println!("{}", result);
+    }}
+}
+
+/// Expands to the file, line and column on where it was called.
+/// 
+/// Return the file, line and column on where it was called with dimmed style.
+/// Used for debugging (with vari::util::log()).
+/// 
+/// # Example:
+/// ```
+/// use vari::{util::log, here};
+/// log("Debugging!", here!());
+/// ```
+#[macro_export]
+macro_rules! here {
+    () => {{
+        &vformat!("[$dim]{}:{}:{}[$/]", file!(), line!(), column!())
     }}
 }

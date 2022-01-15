@@ -1,5 +1,5 @@
 mod util {
-    use vari::{util::NoAnsi, vformat};
+    use vari::{util::NoAnsi, vformat, here};
 
     #[test]
     fn test_hex_to_rgb() {
@@ -18,16 +18,14 @@ mod util {
         // Terminal width is 80, for example
         let width = term_size::dimensions().unwrap().0;
 
-        println!();
-        println!("---------- Normal .len() padding calculation ----------");
+        println!("\n---------- Normal .len() padding calculation ----------");
         println!("{}", vformat!("[$dim]\" \".repeat(width - from.len() - text.len()[$/]"));
         println!("{}{}{}", text, " ".repeat(width - from.len() - text.len()), from);
         println!("--------- .no_ansi().len() padding calculation --------");
         println!("{}", vformat!("[$dim]\" \".repeat(width - from.no_ansi().len() - text.no_ansi().len()[$/]"));
         println!("{}{}{}", text, " ".repeat(width - from.no_ansi().len() - text.no_ansi().len()), from);
         println!("-------------------------------------------------------");
-        println!("Text: {}, From: {}", text, from);
-        println!();
+        println!("Text: {}, From: {}\n", text, from);
     }
 
     #[test]
@@ -35,6 +33,7 @@ mod util {
         let log_message = vformat!("[$green]This message is send by main.rs![$/]");
         let log_file = vformat!("[$dim]src/main.rs[$/]");
         vari::util::log(&log_message, &log_file);
+        vari::util::log(&log_message, here!());
     }
 
     #[test]

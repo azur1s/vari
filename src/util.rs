@@ -68,19 +68,27 @@ impl NoAnsi for str {
 /// vari::util::log(&log_message, &log_file);
 /// ```
 pub fn log(string: &str, from: &str){
-    if let Some((w, _)) = term_size::dimensions() {
-        
-        let padding_amount = w - from.no_ansi().len() - string.no_ansi().len();
-        let padding = " ".repeat(padding_amount);
-        
-        let mut result = String::new();
-        
-        result.push_str(string);
-        result.push_str(&padding);
-        result.push_str(from);
-        
-        println!("{}", result);
-    } else {
-        panic!("Failed to get terminal size");
+    match from.len() {
+        0 => {
+            println!("{}", string);
+        }
+        // If file are specified
+        _ => {
+            if let Some((w, _)) = term_size::dimensions() {
+            
+                let padding_amount = w - from.no_ansi().len() - string.no_ansi().len();
+                let padding = " ".repeat(padding_amount);
+                
+                let mut result = String::new();
+                
+                result.push_str(string);
+                result.push_str(&padding);
+                result.push_str(from);
+                
+                println!("{}", result);
+            } else {
+                panic!("Failed to get terminal size");
+            }
+        }
     }
 }
