@@ -84,7 +84,7 @@ vprintln!("[$#ffffff]Hello, [$#000000]World![$/]");
 ### Colorize
 ```toml
 [dependencies]
-vari = { version = "0.1.8", features = ["colorize"] }
+vari = { version = "0.2.0", features = ["colorize"] }
 ```
 
 Colorize string directly by calling colorize() method, like [colored](https://github.com/mackwic/colored) crate.

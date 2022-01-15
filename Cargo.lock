@@ -52,7 +52,7 @@ dependencies = [
 
 [[package]]
 name = "vari"
-version = "0.1.8"
+version = "0.2.0"
 dependencies = [
  "regex",
  "term_size",
