@@ -76,7 +76,9 @@ vprintln!("{}Backgroundssss{}[$/]", "[bg$magenta]", "[bg$[188, 188, 188]]World![
 // Hexadecimal
 vprintln!("[$#ffffff]Hello, [$#000000]World![$/]");
 ```
+
 ### Colorize
+
 Colorize string directly by calling colorize() method, like [colored](https://github.com/mackwic/colored) crate.
 
 For example: "red".colorize("red") is the same as "[\$red]red[$/]"
@@ -93,7 +95,19 @@ fn main() {
     println!("{}", "Bold.".colorize("bold"));
 }
 ```
+
+### Log
+
+Some println-ish function for logging
+
+```rust
+let log_message = vformat!("[$green]This message is send by main.rs![$/]");
+let log_file = vformat!("[$dim]src/main.rs[$/]");
+vari::util::log(&log_message, &log_file);
+```
+
 ### No ANSI for .len()
+
 This might be used in padding calculation, because in colored string (eg. "\x1b[31mTest\x1b[0m"),
 the length calculated also contains the "[31m" and the "[0m" in it, making the padding incorrect.
 So this trait implements a ".no_ansi()" which remove all the ANSI escape sequence and then you could do
@@ -115,7 +129,9 @@ result.push_str(right);
 return result      
 ```
 ![no_ansi()](https://raw.githubusercontent.com/azur1s/vari/master/assets/no_ansi.png)
+
 ### Fun
+
 ```rust
 fn main() {
     // Rainbow colors!

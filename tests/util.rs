@@ -31,6 +31,13 @@ mod util {
     }
 
     #[test]
+    fn readme_from() {
+        let log_message = vformat!("[$green]This message is send by main.rs![$/]");
+        let log_file = vformat!("[$dim]src/main.rs[$/]");
+        vari::util::log(&log_message, &log_file);
+    }
+
+    #[test]
     fn no_ansi() {
         let a = "\x1b[1mAAAA\x1b[0m";
         let b = "BBBB";
