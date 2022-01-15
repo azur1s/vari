@@ -6,13 +6,9 @@
 /// 
 /// # Example:
 /// ```
-/// use vari::colorize::Colorize;
-/// 
-/// fn main() {
-///     let red = "red".colorize("red");
-///     assert_eq!(red, "\x1b[31mred\x1b[0m");
-///     println!("{}", red);
-/// }
+/// let red = "red".colorize("red");
+/// assert_eq!(red, "\x1b[31mred\x1b[0m");
+/// println!("{}", red);
 /// ```
 pub trait Colorize {
     fn colorize(&self, color: &str) -> String;

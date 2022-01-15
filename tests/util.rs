@@ -1,5 +1,5 @@
 mod util {
-    use vari::{util::NoAnsi, vformat, here};
+    use vari::{util::NoAnsi, vformat};
 
     #[test]
     fn test_hex_to_rgb() {
@@ -28,12 +28,13 @@ mod util {
         println!("Text: {}, From: {}\n", text, from);
     }
 
+    #[cfg(feature = "log")]
     #[test]
     fn readme_from() {
         let log_message = vformat!("[$green]This message is send by main.rs![$/]");
         let log_file = vformat!("[$dim]src/main.rs[$/]");
-        vari::util::log(&log_message, &log_file);
-        vari::util::log(&log_message, here!());
+        vari::log::log(&log_message, &log_file);
+        vari::log::log(&log_message, here!());
     }
 
     #[test]

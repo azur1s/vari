@@ -8,8 +8,6 @@ const RAINBOW_ESCAPE_SEQUENCE: [&str; 6] = ["\x1b[31m", "\x1b[33m", "\x1b[32m", 
 /// 
 /// # Examples
 /// ```
-/// use vari::fun::rainbow;
-/// 
 /// let rainbow_string = rainbow("Rainbow!!");
 /// assert_eq!(rainbow_string, "\u{1b}[31mR\u{1b}[33ma\u{1b}[32mi\u{1b}[36mn\u{1b}[34mb\u{1b}[35mo\u{1b}[31mw\u{1b}[33m!\u{1b}[32m!\u{1b}[0m");
 /// // that is pretty long assertion...

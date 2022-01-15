@@ -6,6 +6,9 @@ pub mod fun;
 pub mod colorize;
 pub mod util;
 
+#[cfg(feature = "log")]
+pub mod log;
+
 /// Format a string with ANSI escape sequences.
 ///
 /// Parse color anchor by detecting if there is a color anchor
@@ -28,13 +31,8 @@ pub fn format(message: &str) -> String {
 ///
 /// # Example:
 /// ```
-/// #[macro_use]
-/// extern crate vari;
-/// 
-/// fn main() {
-///     let f = vformat!("[$cyan]Hi![$/]");
-///     assert_eq!(f, "\x1b[36mHi!\x1b[0m");
-/// }
+/// let f = vformat!("[$cyan]Hi![$/]");
+/// assert_eq!(f, "\x1b[36mHi!\x1b[0m");
 /// ```
 #[macro_export]
 macro_rules! vformat {
@@ -52,12 +50,7 @@ macro_rules! vformat {
 /// 
 /// # Example:
 /// ```
-/// #[macro_use]
-/// extern crate vari;
-/// 
-/// fn main() {
-///    vprintln!("[$cyan]Hi![$/]");
-/// }
+/// vprintln!("[$cyan]Hi![$/]");
 /// ```
 #[macro_export]
 macro_rules! vprint {
@@ -75,12 +68,7 @@ macro_rules! vprint {
 /// 
 /// # Example:
 /// ```
-/// #[macro_use]
-/// extern crate vari;
-/// 
-/// fn main() {
-///   vprintln!("[$cyan]Hi![$/]");
-/// }
+/// vprintln!("[$cyan]Hi![$/]");
 /// ```
 #[macro_export]
 macro_rules! vprintln {
@@ -101,8 +89,7 @@ macro_rules! vprintln {
 /// 
 /// # Example:
 /// ```
-/// use vari::{util::log, here};
-/// log("Debugging!", here!());
+/// log!("Debugging!", here!());
 /// ```
 #[macro_export]
 macro_rules! here {
