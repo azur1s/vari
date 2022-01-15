@@ -12,9 +12,12 @@ mod util {
 
     #[test]
     fn no_ansi() {
-        let original = "\x1b[1mTest\x1b[0m";
-        let result = original.no_ansi();
+        let a = "\x1b[1mTest\x1b[0m";
+        let b = "Test";
+        let ar = a.no_ansi();
+        let br = b.no_ansi();
 
-        assert_eq!(result, "Test");
+        assert_eq!(ar, "Test");
+        assert_eq!(br, "Test");
     }
 }

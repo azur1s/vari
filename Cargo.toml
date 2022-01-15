@@ -14,3 +14,4 @@ keywords = ["color", "format", "terminal", "ansi_term", "cosmetic", "cli"]
 
 [dependencies]
 regex = "1.5.4"
+term_size = "0.3.2"

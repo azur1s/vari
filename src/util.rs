@@ -52,15 +52,17 @@ impl NoAnsi for str {
         let re = Regex::new(r"(?:\x1b\[[;\d]*m)").unwrap();
         let mut last = 0;
 
-        for cap in re.captures_iter(&self) {
-            let start = cap.get(0).unwrap().start();
-            let end = cap.get(0).unwrap().end();
+        if re.is_match(self) {
+            for cap in re.captures_iter(self) {
+                let start = cap.get(0).unwrap().start();
+                let end = cap.get(0).unwrap().end();
 
-            if start > last {
-                result.push_str(&self[last..start].to_string());
+                result.push_str(&self[last..start]);
+
+                last = end;
             }
-
-            last = end;
+        } else {
+            result.push_str(self);
         }
 
         result
