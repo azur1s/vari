@@ -8,7 +8,7 @@ homepage = "https://github.com/azur1s/vari"
 repository = "https://github.com/azur1s/vari"
 license = "AGPL-3.0"
 readme = "README.md"
-keywords = ["color", "format", "terminal", "ansi_term", "cosmetic", "cli"]
+keywords = ["color", "format", "terminal", "ansi_term", "cli"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
