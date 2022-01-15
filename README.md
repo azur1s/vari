@@ -19,6 +19,7 @@ vari = "0.1.8"
 ## Features
 
 ### Color Anchor
+> This is in default features.
 
 Color anchor are a bbcode-like markup for colors and styles (eg. "[\$red]", "[bg\$yellow]", "[\$bold]")
 
