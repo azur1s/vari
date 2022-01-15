@@ -12,13 +12,22 @@ mod util {
 
     #[test]
     fn from() {
+        let text = vformat!("[$cyan]Test[$/]");
         let from = vformat!("[$dim]src/main.rs:1[$/]");
-        println!("{}", vari::util::log_from(&vformat!("[$green]GET[$/] src/something.js"), &from));
-        println!("{}", vari::util::log_from(&vformat!("[$green]GET[$/] src/assets/cool_pictures.png"), &from));
-        println!("{}", vari::util::log_from(&vformat!("[$green]GET[$/] src/assets/wallpaper.png"), &from));
-        println!("{}", vari::util::log_from(&vformat!("[$green]GET[$/] src/css.css"), &from));
-        println!("{}", vari::util::log_from(&vformat!("[$green]GET[$/] src/index.js"), &from));
-        println!("{}", vari::util::log_from(&vformat!("[$green]GET[$/] src/favicon.png"), &from));
+
+        // Terminal width is 80, for example
+        let width = term_size::dimensions().unwrap().0;
+
+        println!();
+        println!("---------- Normal .len() padding calculation ----------");
+        println!("{}", vformat!("[$dim]\" \".repeat(width - from.len() - text.len()[$/]"));
+        println!("{}{}{}", text, " ".repeat(width - from.len() - text.len()), from);
+        println!("--------- .no_ansi().len() padding calculation --------");
+        println!("{}", vformat!("[$dim]\" \".repeat(width - from.no_ansi().len() - text.no_ansi().len()[$/]"));
+        println!("{}{}{}", text, " ".repeat(width - from.no_ansi().len() - text.no_ansi().len()), from);
+        println!("-------------------------------------------------------");
+        println!("Text: {}, From: {}", text, from);
+        println!();
     }
 
     #[test]
