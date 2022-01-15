@@ -105,6 +105,7 @@ let log_message = vformat!("[$green]This message is send by main.rs![$/]");
 let log_file = vformat!("[$dim]src/main.rs[$/]");
 vari::util::log(&log_message, &log_file);
 ```
+![logs](https://raw.githubusercontent.com/azur1s/vari/master/assets/log.png)
 
 ### No ANSI for .len()
 
